@@ -11,5 +11,5 @@ public class FeignConfig {
     public RequestInterceptor requestInterceptor() {
         return requestTemplate ->
             requestTemplate.header("Authorization", "Bearer X0vjEUN6KRlxbp2DoUkyHeM0VOmxY91rA6BbU5j3Xu6wDodwS0McmilLPBWDUcJ1");
-        };
+        }
     }
