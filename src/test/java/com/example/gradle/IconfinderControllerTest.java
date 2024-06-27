@@ -25,14 +25,14 @@ public class IconfinderControllerTest {
     private StyleListResponseDto mockResponse;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         mockResponse = new StyleListResponseDto();
 
         when(iconfinderClient.listAllStyles(anyInt())).thenReturn(mockResponse);
     }
 
     @Test
-    public void testListAllStyles() throws Exception {
+    void testListAllStyles() throws Exception {
         int count = 5;
 
         mockMvc.perform(get("/iconfinder/styles")
