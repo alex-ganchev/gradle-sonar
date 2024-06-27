@@ -5,13 +5,6 @@ plugins {
     id "org.sonarqube" version "4.4.1.3373"
     id 'jacoco'
 }
-sonar {
-    properties {
-        property "sonar.projectKey", "alex-ganchev_gradle-sonar"
-        property "sonar.organization", "alex-ganchev"
-        property "sonar.host.url", "https://sonarcloud.io"
-    }
-}
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
@@ -21,18 +14,7 @@ java {
         languageVersion = JavaLanguageVersion.of(17)
     }
 }
-jacoco {
-    toolVersion = "0.8.11"
-    reportsDirectory = layout.buildDirectory.dir('reports/jacoco')
-}
 
-jacocoTestReport {
-    reports {
-        xml.required = false
-        csv.required = false
-        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
-    }
-}
 repositories {
     mavenCentral()
 }
@@ -48,36 +30,43 @@ dependencies {
     testCompileOnly 'org.projectlombok:lombok:1.18.32'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.32'
 }
-test {
-    finalizedBy jacocoTestReport // report is always generated after tests run
+
+tasks.named('test') {
+    useJUnitPlatform()
+    finalizedBy 'jacocoTestReport'
 }
+
+jacoco {
+    toolVersion = "0.8.11"
+    reportsDirectory = layout.buildDirectory.dir('reports/jacoco')
+}
+
 jacocoTestReport {
-    dependsOn test // tests are required to run before generating the report
+    dependsOn test
+    reports {
+        xml.required = true
+        csv.required = false
+        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+    }
 }
+
 jacocoTestCoverageVerification {
     violationRules {
         rule {
             limit {
-                minimum = 0.5
-            }
-        }
-
-        rule {
-            enabled = false
-            element = 'CLASS'
-            includes = ['org.gradle.*']
-
-            limit {
-                counter = 'LINE'
-                value = 'TOTALCOUNT'
-                maximum = 0.3
+                minimum = 0.7
             }
         }
     }
 }
-//
-//tasks.named('test') {
-//    useJUnitPlatform()
-//    finalizedBy 'jacocoTestReport'
-//}
 
+tasks.check.dependsOn jacocoTestCoverageVerification
+
+sonar {
+    properties {
+        property "sonar.projectKey", "alex-ganchev_gradle-sonar"
+        property "sonar.organization", "alex-ganchev"
+        property "sonar.host.url", "https://sonarcloud.io"
+        property "sonar.coverage.jacoco.xmlReportPaths", "${buildDir}/reports/jacoco/test/jacocoTestReport.xml"
+    }
+}
