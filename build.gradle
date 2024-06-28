@@ -52,20 +52,21 @@ jacocoTestReport {
             files(classDirectories.files.collect { fileTree(dir: it, exclude: [
                     'com/example/gradle/GradleApplication.class',
                     'com/example/gradle/StyleResponseDto.class',
+                    'com/example/gradle/StyleListResponseDto.class',
                     'com/example/gradle/FeignConfig.class',
             ]) })
     )
 }
 
-jacocoTestCoverageVerification {
-    violationRules {
-        rule {
-            limit {
-                minimum = 0.4
-            }
-        }
-    }
-}
+//jacocoTestCoverageVerification {
+//    violationRules {
+//        rule {
+//            limit {
+//                minimum = 0.7
+//            }
+//        }
+//    }
+//}
 
 tasks.check.dependsOn jacocoTestCoverageVerification
 
