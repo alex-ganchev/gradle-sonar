@@ -15,7 +15,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.hamcrest.Matchers.*;
 
 @WebMvcTest(IconfinderController.class)
-public class IconfinderControllerTest {
+class IconfinderControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
