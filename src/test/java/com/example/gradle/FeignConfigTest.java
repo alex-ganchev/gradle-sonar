@@ -9,11 +9,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-public class FeignConfigTest {
+class FeignConfigTest {
     @Autowired
     private RequestInterceptor requestInterceptor;
     @Test
-    public void testRequestInterceptor() {
+    void testRequestInterceptor() {
         RequestTemplate requestTemplate = new RequestTemplate();
         requestInterceptor.apply(requestTemplate);
 
