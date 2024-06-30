@@ -53,7 +53,7 @@ jacocoTestReport {
                     'com/example/gradle/GradleApplication.class',
                     'com/example/gradle/StyleResponseDto.class',
                     'com/example/gradle/StyleListResponseDto.class',
-                    'com/example/gradle/FeignConfig.class',
+                    //'com/example/gradle/FeignConfig.class',
             ]) })
     )
 }
